@@ -15,7 +15,7 @@ def validate(data, schema: dict[str, T]) -> [str]:
     for col, val in data.items():
         colKind = schema.get(col, None)
         if colKind == None:
-            errors.append(f"invalid column {col}")
+            errors.append(f"invalid column `{col}`")
             continue
         valKind = typeName(val)
         if valKind != colKind:
@@ -32,12 +32,12 @@ def test():
     }
     data_one = {}
     data_two = {
-        "email":"test@email.com",
+        "email": "test@email.com",
         "phone": "12345",
         "address": "123 Test Way"
     }
     data_three = {
-        "email":"test@email.com",
+        "email": "test@email.com",
         "phone": 12345,
         "address": "123 Test Way",
         "postalCode": "K6D789"
