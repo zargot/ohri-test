@@ -5,7 +5,11 @@ T = TypeVar('T')
 # legal types are str and int
 def validate(data, schema: dict[str, T]) -> [str]:
     errors = [str]
-    errors.append("test")
+    for col, val in data.items():
+        colKind = schema.get(col, None)
+        if colKind == None:
+            errors.append(f"invalid column {col}")
+            continue
     return errors
 
 def test():
