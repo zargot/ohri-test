@@ -12,16 +12,22 @@ def typeName(x) -> str:
 # legal types are str and int
 def validate(data, schema: dict[str, T]) -> [str]:
     errors = [str]
+    unusedColumns = list(schema.keys())
     for col, val in data.items():
+        # validate column
         colKind = schema.get(col, None)
         if colKind == None:
             errors.append(f"invalid column `{col}`")
             continue
+        unusedColumns.remove(col)
+
+        # validate value
         valKind = typeName(val)
         if valKind != colKind:
             errors.append(f"invalid type for column `{col}`: "
                           f"expected {colKind}, got {valKind}")
-            continue
+    for col in unusedColumns:
+        errors.append(f"missing column `{col}`")
     return errors
 
 def test():
