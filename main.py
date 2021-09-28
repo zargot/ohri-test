@@ -2,6 +2,13 @@ from typing import TypeVar
 
 T = TypeVar('T')
 
+def typeName(x) -> str:
+    t = type(x)
+    if t == str:
+        return "string"
+    if t == int:
+        return "number"
+
 # legal types are str and int
 def validate(data, schema: dict[str, T]) -> [str]:
     errors = [str]
@@ -9,6 +16,11 @@ def validate(data, schema: dict[str, T]) -> [str]:
         colKind = schema.get(col, None)
         if colKind == None:
             errors.append(f"invalid column {col}")
+            continue
+        valKind = typeName(val)
+        if valKind != colKind:
+            errors.append(f"invalid type for column `{col}`: "
+                          f"expected {colKind}, got {valKind}")
             continue
     return errors
 
