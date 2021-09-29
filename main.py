@@ -1,3 +1,5 @@
+"""OHRI test."""
+
 from typing import TypeVar
 
 T = TypeVar('T')
@@ -9,19 +11,21 @@ def typeName(x) -> str:
     if t == int:
         return "number"
 
-# legal types are str and int
 def validate(data, schema: dict[str, T]) -> [str]:
+    """Return a list of errors contained in data after validating with schema.
+    An empty list means success.
+
+    :param data: One row of column names and values
+    :param schema: Column names and types
+    """
     errors = [str]
     unusedColumns = list(schema.keys())
     for col, val in data.items():
-        # validate column
         colKind = schema.get(col, None)
         if colKind == None:
             errors.append(f"invalid column `{col}`")
             continue
         unusedColumns.remove(col)
-
-        # validate value
         valKind = typeName(val)
         if valKind != colKind:
             errors.append(f"invalid type for column `{col}`: "
