@@ -4,8 +4,8 @@ from typing import TypeVar
 
 _T = TypeVar('T')
 
-def _type_name(x) -> str:
-    t = type(x)
+def _type_name(val) -> str:
+    t = type(val)
     if t == str:
         return "string"
     elif t == int:
