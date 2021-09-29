@@ -40,21 +40,23 @@ def test():
         "phone": "number",
         "address": "string"
     }
-    data_one = {}
-    data_two = {
-        "email": "test@email.com",
-        "phone": "12345",
-        "address": "123 Test Way"
-    }
-    data_three = {
-        "email": "test@email.com",
-        "phone": 12345,
-        "address": "123 Test Way",
-        "postalCode": "K6D789"
-    }
-    print(validate(data_one, schema))
-    print(validate(data_two, schema))
-    print(validate(data_three, schema))
+    data = [
+        {},
+        {
+            "email": "test@email.com",
+            "phone": "12345",
+            "address": "123 Test Way"
+        },
+        {
+            "email": "test@email.com",
+            "phone": 12345,
+            "address": "123 Test Way",
+            "postalCode": "K6D789"
+        },
+    ]
+    for i, d in enumerate(data):
+        print(i+1)
+        print(validate(d, schema))
 
 if __name__ == "__main__":
     test()
