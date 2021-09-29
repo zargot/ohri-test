@@ -8,8 +8,10 @@ def type_name(x) -> str:
     t = type(x)
     if t == str:
         return "string"
-    if t == int:
+    elif t == int:
         return "number"
+    else:
+        return "unknown"
 
 def validate(data, schema: dict[str, T]) -> [str]:
     """Return a list of errors contained in data after validating with schema.
@@ -53,6 +55,9 @@ def test():
             "address": "123 Test Way",
             "postalCode": "K6D789"
         },
+        {
+            "phone": 1.1
+        }
     ]
     for i, data in enumerate(data_tests):
         print(i+1)
