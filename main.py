@@ -2,9 +2,9 @@
 
 from typing import TypeVar
 
-T = TypeVar('T')
+_T = TypeVar('T')
 
-def type_name(x) -> str:
+def _type_name(x) -> str:
     t = type(x)
     if t == str:
         return "string"
@@ -13,7 +13,7 @@ def type_name(x) -> str:
     else:
         return "unknown"
 
-def validate(data, schema: dict[str, T]) -> [str]:
+def validate(data, schema: dict[str, _T]) -> [str]:
     """Return a list of errors contained in data after validating with schema.
     An empty list means success.
 
@@ -28,7 +28,7 @@ def validate(data, schema: dict[str, T]) -> [str]:
             errors.append(f"invalid column `{col}`")
             continue
         unused_columns.remove(col)
-        val_kind = type_name(val)
+        val_kind = _type_name(val)
         if val_kind != col_kind:
             errors.append(f"invalid type for column `{col}`: "
                           f"expected {col_kind}, got {val_kind}")
@@ -36,7 +36,7 @@ def validate(data, schema: dict[str, T]) -> [str]:
         errors.append(f"missing column `{col}`")
     return errors
 
-def test():
+def _test():
     schema = {
         "email": "string",
         "phone": "number",
@@ -64,4 +64,4 @@ def test():
         print(validate(data, schema))
 
 if __name__ == "__main__":
-    test()
+    _test()
