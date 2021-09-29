@@ -4,7 +4,7 @@ from typing import TypeVar
 
 T = TypeVar('T')
 
-def typeName(x) -> str:
+def type_name(x) -> str:
     t = type(x)
     if t == str:
         return "string"
@@ -19,18 +19,18 @@ def validate(data, schema: dict[str, T]) -> [str]:
     :param schema: Column names and types
     """
     errors = [str]
-    unusedColumns = list(schema.keys())
+    unused_columns = list(schema.keys())
     for col, val in data.items():
-        colKind = schema.get(col, None)
-        if colKind == None:
+        col_kind = schema.get(col, None)
+        if col_kind is None:
             errors.append(f"invalid column `{col}`")
             continue
-        unusedColumns.remove(col)
-        valKind = typeName(val)
-        if valKind != colKind:
+        unused_columns.remove(col)
+        val_kind = type_name(val)
+        if val_kind != col_kind:
             errors.append(f"invalid type for column `{col}`: "
-                          f"expected {colKind}, got {valKind}")
-    for col in unusedColumns:
+                          f"expected {col_kind}, got {val_kind}")
+    for col in unused_columns:
         errors.append(f"missing column `{col}`")
     return errors
 
@@ -40,7 +40,7 @@ def test():
         "phone": "number",
         "address": "string"
     }
-    data = [
+    data_tests = [
         {},
         {
             "email": "test@email.com",
@@ -54,9 +54,9 @@ def test():
             "postalCode": "K6D789"
         },
     ]
-    for i, d in enumerate(data):
+    for i, data in enumerate(data_tests):
         print(i+1)
-        print(validate(d, schema))
+        print(validate(data, schema))
 
 if __name__ == "__main__":
     test()
